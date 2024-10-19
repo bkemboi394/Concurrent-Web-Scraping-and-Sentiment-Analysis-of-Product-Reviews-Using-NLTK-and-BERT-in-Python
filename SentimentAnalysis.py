@@ -168,10 +168,10 @@ class SentimentAnalyzer:
         return sentiment_counts, review_sentiments
 
 
-# Fine-tuning BERT
+# Fine-tuning BERT (using Google Colab A100 GPU)
 class BERTFineTuner:
     def __init__(self, model_path=None):
-        # Check if a pre-trained model path is provided
+        # First checking if a pre-trained model path is provided to load from
         if model_path and os.path.exists(model_path):
             self.tokenizer = BertTokenizer.from_pretrained(model_path)
             self.model = BertForSequenceClassification.from_pretrained(model_path)
@@ -182,13 +182,27 @@ class BERTFineTuner:
             self.dataset = load_dataset('amazon_polarity')
             print("Initialized BERT model from pre-trained weights.")
 
+            # Freezing all layers except the last layer
+        for param in self.model.bert.parameters():
+            param.requires_grad = False
+
+            # Unfreezing the classifier layer (last layer)
+        for param in self.model.classifier.parameters():
+            param.requires_grad = True
+
+
+
     def tokenize_function(self, examples):
         return self.tokenizer(examples['content'], padding="max_length", truncation=True)
 
     def fine_tune(self, output_dir="./fine_tuned_bert"):
         tokenized_datasets = self.dataset.map(self.tokenize_function, batched=True)
         training_args = TrainingArguments(output_dir="./results", evaluation_strategy="epoch",
-                                          per_device_train_batch_size=8, num_train_epochs=3)
+                                          per_device_train_batch_size=64, num_train_epochs=3,
+                                          logging_steps=50, save_strategy="epoch", fp16=True,
+                                          gradient_accumulation_steps=2,
+                                          learning_rate=3e-5)
+
         trainer = Trainer(model=self.model, args=training_args, train_dataset=tokenized_datasets['train'],
                           eval_dataset=tokenized_datasets['test'])
         trainer.train()
@@ -316,7 +330,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
 
 
