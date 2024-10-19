@@ -143,43 +143,60 @@ class SentimentAnalyzer:
 
     def analyze_sentiment(self, reviews):
         sentiment_counts = {'very_positive': 0, 'positive': 0, 'negative': 0, 'very_negative': 0, 'neutral': 0}
-
+        review_sentiments = []
         for review in reviews:
             if not review:
                 continue
+                #Sia sentiment calculation logic
             score = sum(self.sia.polarity_scores(w)["compound"] for w in review) / len(review)
             if score > 0.05:
                 sentiment_counts['positive'] += 1
+                review_sentiments.append("positive")
             elif score > 0:
                 sentiment_counts['very_positive'] += 1
+                review_sentiments.append("very positive")
             elif score < -0.05:
                 sentiment_counts['negative'] += 1
+                review_sentiments.append("negative")
             elif score < 0:
                 sentiment_counts['very_negative'] += 1
+                review_sentiments.append("very negative")
             else:
                 sentiment_counts['neutral'] += 1
+                review_sentiments.append("neutral")
 
-        return sentiment_counts
-
+        return sentiment_counts, review_sentiments
 
 
 # Fine-tuning BERT
 class BERTFineTuner:
-    def __init__(self):
-        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-        self.model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2)
-        self.dataset = load_dataset('amazon_polarity')
+    def __init__(self, model_path=None):
+        # Check if a pre-trained model path is provided
+        if model_path and os.path.exists(model_path):
+            self.tokenizer = BertTokenizer.from_pretrained(model_path)
+            self.model = BertForSequenceClassification.from_pretrained(model_path)
+            print(f"Loaded fine-tuned model from {model_path}")
+        else:
+            self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+            self.model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2)
+            self.dataset = load_dataset('amazon_polarity')
+            print("Initialized BERT model from pre-trained weights.")
 
     def tokenize_function(self, examples):
         return self.tokenizer(examples['content'], padding="max_length", truncation=True)
 
-    def fine_tune(self):
+    def fine_tune(self, output_dir="./fine_tuned_bert"):
         tokenized_datasets = self.dataset.map(self.tokenize_function, batched=True)
         training_args = TrainingArguments(output_dir="./results", evaluation_strategy="epoch",
                                           per_device_train_batch_size=8, num_train_epochs=3)
         trainer = Trainer(model=self.model, args=training_args, train_dataset=tokenized_datasets['train'],
                           eval_dataset=tokenized_datasets['test'])
         trainer.train()
+
+        # Save the fine-tuned model
+        self.model.save_pretrained(output_dir)
+        self.tokenizer.save_pretrained(output_dir)
+        print(f"Fine-tuned model saved to {output_dir}")
 
     def classify_reviews(self, reviews):
         inputs = self.tokenizer(reviews, return_tensors="pt", padding=True, truncation=True)
@@ -194,7 +211,7 @@ class BERTFineTuner:
 # Results generator for both SIA and BERT
 class ReportGenerator:
     @staticmethod
-    def display_SIA_results(total_sentiment_counts, product_star_rating, titles):
+    def display_SIA_results(total_sentiment_counts, product_star_rating, review_sentiments,titles):
         print("SIA Results:\n")
         total_reviews = sum(total_sentiment_counts.values())
         print("\nTotal Reviews =", total_reviews)
@@ -213,14 +230,26 @@ class ReportGenerator:
         print("\nOverall Positive Reviews:", overall_positive_reviews)
         print("Overall Negative Reviews:", overall_negative_reviews)
         print("Overall Neutral Reviews:", overall_neutral_reviews)
-        print("\nCompare to the product's star rating of", product_star_rating, "and review titles below:\n")
-        print(titles)
+        print("\nReview sentiments based on SIA:")
+        for (idx, sentiment), (idx_title, review_title) in zip(enumerate(review_sentiments, 1), titles.items()):
+            print(f"Review {idx}: {review_title} -> {sentiment}")
+
+        overall_positive_reviews = "{:.4%}".format(
+            (total_sentiment_counts['very_positive'] + total_sentiment_counts['positive']) / total_reviews)
+        print("\nOverall Positive Reviews:", overall_positive_reviews)
+
+        print("\nCompare to the product's star rating of", product_star_rating, "and review titles below:\n",titles)
+
 
     @staticmethod
-    def display_BERT_results(titles, predictions):
+    def display_BERT_results(titles, predictions,star_rating):
+        positive_reviews = sum(1 for pred in predictions if pred == 'positive')
+        total_reviews = len(predictions)
+        overall_positive_reviews = "{:.4%}".format(positive_reviews / total_reviews)
         print("\n BERT Results:\n")
         for idx, title in titles.items():
             print(f"Review {idx}: {title} -> {predictions[idx - 1]}")
+        print("Overall positive reviews:", overall_positive_reviews, "\nCompare to the product's star rating of", star_rating)
 
 
 
@@ -257,27 +286,38 @@ def main():
     validated_reviews = sentiment_analyzer.validate_reviews(cleaned_reviews, adj_vocab)
 
     # Analyze sentiment of the reviews
-    sentiment_counts = sentiment_analyzer.analyze_sentiment(validated_reviews)
+    sentiment_counts, review_sentiments = sentiment_analyzer.analyze_sentiment(validated_reviews)
 
     # Generate the SIA report
     report_generator = ReportGenerator()
-    report_generator.display_SIA_results(sentiment_counts, product_star_rating, titles)
+    report_generator.display_SIA_results(sentiment_counts, product_star_rating,review_sentiments, titles)
 
+    # Path to save or load the fine-tuned BERT model
+    bert_model_path = "./fine_tuned_bert"
 
-    # Fine-tune BERT model on Amazon Polarity dataset
-    fine_tuner = BERTFineTuner()
-    fine_tuner.fine_tune()
+    # Check if a fine-tuned model already exists
+    if os.path.exists(bert_model_path):
+        # Load the fine-tuned BERT model
+        fine_tuner = BERTFineTuner(model_path=bert_model_path)
+    else:
+        # Fine-tune a new BERT model
+        fine_tuner = BERTFineTuner()
+        fine_tuner.fine_tune(output_dir=bert_model_path)
 
     # Apply the fine-tuned BERT model to classify sentiment on scraped reviews
     predictions = fine_tuner.classify_reviews(reviews)
 
     # Generate BERT report
     report_generator = ReportGenerator()
-    report_generator.display_BERT_results(titles, predictions)
+    report_generator.display_BERT_results(titles, predictions,product_star_rating)
 
 
 
 if __name__ == "__main__":
     main()
+
+
+
+
 
 
