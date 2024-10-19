@@ -6,19 +6,126 @@ Scraping page 2...
 Scraping page 3...
 Scraping page 4...
 Scraping page 5...
-Scraping page 6...
 SENTIMENT ANALYSIS OF APPLE-GENERATION-CANCELLING-TRANSPARENCY-PERSONALIZED AMAZON'S REVIEWS
 
+SIA Results:
 
-Total Reviews = 58
-Total Very Positive Reviews = 4	Total Positive Reviews = 50
-Total Very Negative Reviews = 1	Total Negative Reviews = 1
+
+Total Reviews = 48
+Total Very Positive Reviews = 4	Total Positive Reviews = 41
+Total Very Negative Reviews = 0	Total Negative Reviews = 1
 Total Neutral Reviews = 2
 
-Overall Positive Reviews: 93.1034%
-Overall Negative Reviews: 3.4483%
-Overall Neutral Reviews: 3.4483%
+Overall Positive Reviews: 93.7500%
+Overall Negative Reviews: 2.0833%
+Overall Neutral Reviews: 4.1667%
 
-Compare to the product's star rating of 4.7 out of 5 and review titles below:
+Review sentiments based on SIA:
+Review 1: Really really really good.***Update*** -> positive
+Review 2: Amazing Sound and Noise Cancelling for the Price! -> positive
+Review 3: Amazing Sound and Features – Worth Every Penny! -> positive
+Review 4: Amazing headphones with stunning noise cancelation and shameful iOS exclusivity -> positive
+Review 5: perfect pods -> positive
+Review 6: Completely satisfied,  love the updates to the Gen2. -> positive
+Review 7: Absolutely worth it, to me. -> positive
+Review 8: Excellent -> positive
+Review 9: "Wow!" is what I said the first time I heard these at the Apple Store. -> positive
+Review 10: Blocking Out Life’s Chaos, One Noise-Cancelled Moment at a Time -> positive
+Review 11: Great sound quality -> positive
+Review 12: Beyond Wireless -> positive
+Review 13: Case loses charge sooner than 1st Gen. -> neutral
+Review 14: They last for hours -> positive
+Review 15: AMAZING -> positive
+Review 16: Excelentes audífonos, pero defectuosos -> positive
+Review 17: Somewhat finicky -> positive
+Review 18: Excellent Ear Buds With Various Sizes -> positive
+Review 19: Apple AirPods Pro (2nd Generation) -> positive
+Review 20: Great item -> positive
+Review 21: THESE ROCK! -> positive
+Review 22: Tough -> positive
+Review 23: So good it's annoying. Let me explain. -> very positive
+Review 24: Absolutely Thrilled with My AirPods Pro -> positive
+Review 25: It's amazing if you like the Apple ecosystem -> positive
+Review 26: Love them -> positive
+Review 27: They're airpods -> positive
+Review 28: Comfortable and really nice -> positive
+Review 29: Great Sound and Convenience -> positive
+Review 30: Battery -> positive
+Review 31: Great soundproofing -> positive
+Review 32: Other than glaring white, they’re kind of perfect. -> positive
+Review 33: Good pair of earbuds -> positive
+Review 34: Ok… not a hi-5 item from Apple -> very positive
+Review 35: Of course it’s good! It’s Apple! -> positive
+Review 36: Phenomenal AirPods -> positive
+Review 37: LOVE THEM! -> positive
+Review 38: Solid sound quality -> positive
+Review 39: People on work calls keep asking me what my headset is - because it sounds so good -> very positive
+Review 40: AirPods -> very positive
+Review 41: Nice to use -> positive
+Review 42: My second one -> positive
+Review 43: AirPods Pro 2da generación -> positive
+Review 44: Best earbuds -> positive
+Review 45: AMAZING AIRPODS -> positive
+Review 46: Professional Renovation Contractor -> neutral
+Review 47: Great ear buds if you're already part of the Apple ecosystem -> positive
+Review 48: Sound seems lower -> positive
 
-{61: 'If you want a seamless Apple experience, then AirPods Pro are a must.', 62: 'Worth the upgrade', 63: 'Great sound quality', 64: 'Beyond Wireless', 65: 'Case loses charge sooner than 1st Gen.', 66: 'They last for hours', 67: 'Good 👍', 68: 'AMAZING', 69: 'Excelentes audífonos, pero defectuosos', 70: 'Somewhat finicky', 31: 'HUGE improvement over my Bose Quiet Comfort 35 headphones', 32: 'Big upgrade from 1st generation', 33: 'Works well!', 34: 'great price.  worthwhile investment.', 35: "Durable! Even if you're on Android or use them with a PC, they're great!", 36: 'Great Earbuds', 37: 'Perfect!', 38: 'Third Pair of the Pro - Still a champ', 39: 'Nice', 40: 'Great soundproofing', 41: 'Other than glaring white, they’re kind of perfect.', 42: 'Good pair of earbuds', 43: 'Ok… not a hi-5 item from Apple', 44: 'Of course it’s good! It’s Apple!', 45: 'Built well, long battery life', 46: 'Amazing for everything.', 47: 'Phenomenal AirPods', 48: 'LOVE THEM!', 49: 'Solid sound quality', 50: 'People on work calls keep asking me what my headset is - because it sounds so good', 51: 'My second one', 52: 'AirPods', 53: '👍', 54: 'AirPods Pro 2 - Excellent Sound', 55: 'Good but could be better with Android.', 56: 'Perfect!', 57: 'Great sound', 58: 'serious improvement to my life', 59: 'Great', 60: 'Buy for convience, not sound', 21: 'THESE ROCK!', 22: 'Tough', 23: "So good it's annoying. Let me explain.", 24: 'Absolutely Thrilled with My AirPods Pro', 25: "It's amazing if you like the Apple ecosystem", 26: 'Love them', 27: 'Comfortable and really nice', 28: 'Great Sound and Convenience', 29: 'Battery', 30: 'Great prime deal', 1: 'Really really really good.***Update***', 2: 'Amazing Sound and Noise Cancelling for the Price!', 3: 'Amazing Sound and Features – Worth Every Penny!', 4: 'Amazing headphones with stunning noise cancelation and shameful iOS exclusivity', 5: 'perfect pods', 6: 'Completely satisfied,  love the updates to the Gen2.', 7: 'Absolutely worth it, to me.', 8: 'Excellent', 9: 'Blocking Out Life’s Chaos, One Noise-Cancelled Moment at a Time', 10: 'These replaced my 1st gen'}
+Overall Positive Reviews: 93.7500%
+
+Compare to the product's star rating of 4.7 out of 5
+
+BERT Results:
+
+Review sentiments based on BERT:
+Review 1: Really really really good.***Update*** -> positive
+Review 2: Amazing Sound and Noise Cancelling for the Price! -> positive
+Review 3: Amazing Sound and Features - Worth Every Penny! -> positive
+Review 4: Amazing headphones with stunning noise cancelation and shameful iOS exclusivity -> positive
+Review 5: perfect pods -> positive
+Review 6: Completely satisfied, love the updates to the Gen2. -> positive
+Review 7: Absolutely worth it, to me. -> positive
+Review 8: Excellent -> positive
+Review 9: "Wow!" is what I said the first time I heard these at the Apple Store. -> positive
+Review 10: Blocking Out Life's Chaos, One Noise-Cancelled Moment at a Time -> positive
+Review 11: Great sound quality -> positive
+Review 12: Beyond Wireless -> positive
+Review 13: Case loses charge sooner than 1st Gen. -> negative
+Review 14: They last for hours -> positive
+Review 15: AMAZING -> positive
+Review 16: Excelentes audífonos, pero defectuosos -> positive
+Review 17: Somewhat finicky -> positive
+Review 18: Excellent Ear Buds With Various Sizes -> positive
+Review 19: Apple AirPods Pro (2nd Generation) -> positive
+Review 20: Great item -> positive
+Review 21: THESE ROCK! -> positive
+Review 22: Tough -> positive
+Review 23: So good it's annoying. Let me explain. -> positive
+Review 24: Absolutely Thrilled with My AirPods Pro -> positive
+Review 25: It's amazing if you like the Apple ecosystem -> positive
+Review 26: Love them -> positive
+Review 27: They're airpods -> positive
+Review 28: Comfortable and really nice -> positive
+Review 29: Great Sound and Convenience -> positive
+Review 30: Battery -> negative
+Review 31: Great soundproofing -> positive
+Review 32: Other than glaring white, they’re kind of perfect. -> positive
+Review 33: Good pair of earbuds -> positive
+Review 34: Ok… not a hi-5 item from Apple -> positive
+Review 35: Of course it’s good! It’s Apple! -> positive
+Review 36: Phenomenal AirPods -> positive
+Review 37: LOVE THEM! -> positive
+Review 38: Solid sound quality -> positive
+Review 39: People on work calls keep asking me what my headset is - because it sounds so good -> positive
+Review 40: AirPods -> positive
+Review 41: Nice to use -> positive
+Review 42: My second one -> negative
+Review 43: AirPods Pro 2da generación -> positive
+Review 44: Best earbuds -> positive
+Review 45: AMAZING AIRPODS -> positive
+Review 46: Professional Renovation Contractor -> positive
+Review 47: Great ear buds if you're already part of the Apple ecosystem -> positive
+Review 48: Sound seems lower -> negative
+Overall Positive Reviews: 92.2700%
+Compare to the product's star rating of 4.7 out of 5
+
+
