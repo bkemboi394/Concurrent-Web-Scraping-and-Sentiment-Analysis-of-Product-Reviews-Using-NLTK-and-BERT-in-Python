@@ -238,7 +238,7 @@ class ReportGenerator:
             (total_sentiment_counts['very_positive'] + total_sentiment_counts['positive']) / total_reviews)
         print("\nOverall Positive Reviews:", overall_positive_reviews)
 
-        print("\nCompare to the product's star rating of", product_star_rating, "and review titles below:\n",titles)
+        print("\nCompare to the product's star rating of", product_star_rating)
 
 
     @staticmethod
@@ -247,6 +247,7 @@ class ReportGenerator:
         total_reviews = len(predictions)
         overall_positive_reviews = "{:.4%}".format(positive_reviews / total_reviews)
         print("\n BERT Results:\n")
+        print("\nReview sentiments based on BERT:")
         for idx, title in titles.items():
             print(f"Review {idx}: {title} -> {predictions[idx - 1]}")
         print("Overall positive reviews:", overall_positive_reviews, "\nCompare to the product's star rating of", star_rating)
@@ -315,8 +316,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
 
 
 
