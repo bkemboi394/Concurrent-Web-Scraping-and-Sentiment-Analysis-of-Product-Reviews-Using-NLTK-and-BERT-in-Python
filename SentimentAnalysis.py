@@ -181,26 +181,22 @@ class BERTFineTuner:
             self.model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2)
             self.dataset = load_dataset('amazon_polarity')
             print("Initialized BERT model from pre-trained weights.")
-            
-        # Freezing all BERT layers initially
-        for param in self.model.bert.parameters():
-            param.requires_grad = False  
-        
-        # Unfreezing the last 5 BERT layers
-        bert_layers = self.model.bert.encoder.layer
-        for i in range(len(bert_layers)):
-            
-            if i >= len(bert_layers) - 5:  # Last fivelayers
-                for param in bert_layers[i].parameters():
-                    param.requires_grad = True  
 
-        # Unfreezing the classifier layer 
-        for param in self.model.classifier.parameters():
-            param.requires_grad = True
-
-      
-
-          
+            # Freezing all BERT layers initially
+            for param in self.model.bert.parameters():
+                param.requires_grad = False
+    
+                # Unfreezing the last 5 BERT layers
+            bert_layers = self.model.bert.encoder.layer
+            for i in range(len(bert_layers)):
+    
+                if i >= len(bert_layers) - 5:  # Last fivelayers
+                    for param in bert_layers[i].parameters():
+                        param.requires_grad = True
+    
+                        # Unfreezing the classifier layer
+            for param in self.model.classifier.parameters():
+                param.requires_grad = True
 
 
     def tokenize_function(self, examples):
@@ -341,5 +337,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
